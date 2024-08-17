@@ -136,13 +136,93 @@ async function personajesMayores(url) {
   });
 }
 
-personajesMayores(urlPeople);
+async function personajesMasculinos(url) {
+  const personajes = await peticion(url);
+  personajes.forEach(function (personaje) {
+    if (personaje.gender === "Male") {
+      console.log(
+        `Nombre: ${personaje.name} | Sexo: ${personaje.gender} / Masculino`
+      );
+    }
+  });
+}
+
+async function personajesFemeninos(url) {
+  const personajes = await peticion(url);
+  personajes.forEach(function (personaje) {
+    if (personaje.gender === "Female") {
+      console.log(
+        `Nombre: ${personaje.name} | Sexo: ${personaje.gender} / Femenino`
+      );
+    }
+  });
+}
+
+async function traerLugaresPorPelicula(url, url2) {
+  const places = await peticion(url);
+  const films = await peticion(url2);
+
+  const relacionLugarPelicula = [];
+
+  places.forEach(function (place) {
+    const placeId = place.films[0].split("/").pop();
+
+    const pelicula = films.find((film) => film.id === placeId);
+
+    if (pelicula) {
+      relacionLugarPelicula.push({
+        Lugar: place.name,
+        pelicula: pelicula.title,
+      });
+    }
+  });
+  relacionLugarPelicula.forEach(function (item) {
+    console.log(`Lugar: ${item.Lugar} | Pelicula: ${item.pelicula}`);
+  });
+}
+
+async function climaLugares(url) {
+  const lugares = await peticion(url);
+  lugares.forEach(function (lugar) {
+    console.log(`Nombre: ${lugar.name} | Clima: ${lugar.climate}`);
+  });
+}
+
+async function terrenoDeLugares(url) {
+  const lugares = await peticion(url);
+  lugares.forEach(function (lugar) {
+    console.log(`Nombre: ${lugar.name} | Terreno: ${lugar.terrain}`);
+  });
+}
+
+async function traerSpecies(url) {
+  const species = await peticion(url);
+  species.forEach(function (specie) {
+    console.log(`Nombre: ${specie.name} | Tipo: ${specie.classification}`);
+  });
+}
+
+async function traerVehiculos(url) {
+  const vehicles = await peticion(url);
+  vehicles.forEach(function (vehicle) {
+    console.log(`Nombre: ${vehicle.name} | Tipo: ${vehicle.vehicle_class}`);
+  });
+}
+
+async function descripcionVehiculos(url) {
+  const vehicles = await peticion(url);
+  vehicles.forEach(function (vehicle) {
+    console.log(
+      `Nombre: ${vehicle.name} | Descripcion: ${vehicle.description}`
+    );
+  });
+}
 
 async function menu() {
   while (true) {
     const opt = Number(
       prompt(
-        "Bienvenido a la wiki de Studio Ghibli! \n 1. Ver Nombre de peliculas \n 2. Ver Nombres en Japones \n 3. Ver directores \n 4. Ver productores \n 5. Ver año de lanzamiento \n 6. Peliculas mejor puntuadas \n 7. Peliculas peor puntuadas \n 8. Personajes de las peliculas \n 9. Ver peliculas con mayor duracion \n 10. Ver peliculas de menor duracion \n 11. Personajes menores de 18 \n 12. Personajes mayores de 18 0. Salir"
+        "Bienvenido a la wiki de Studio Ghibli! \n 1. Ver Nombre de peliculas \n 2. Ver Nombres en Japones \n 3. Ver directores \n 4. Ver productores \n 5. Ver año de lanzamiento \n 6. Peliculas mejor puntuadas \n 7. Peliculas peor puntuadas \n 8. Personajes de las peliculas \n 9. Ver peliculas con mayor duracion \n 10. Ver peliculas de menor duracion \n 11. Personajes menores de 18 \n 12. Personajes mayores de 18 \n 13. Personajes masculinos \n 14. Personajes femeninos \n 15. Mostrar lugares de las peliculas \n 16. Mostrar el clima de los lugares \n 17. Mostrar el terreno de los lugares \n 18. Mostrar Especies \n 19. Mostrar vehiculos \n 20. Mostrar descripcion de los vehiculos \n 0. Salir"
       )
     );
     if (opt === 1) {
@@ -172,6 +252,24 @@ async function menu() {
       await personajesMenores(urlPeople);
     } else if (opt === 12) {
       await personajesMayores(urlPeople);
+    } else if (opt === 13) {
+      await personajesMasculinos(urlPeople);
+    } else if (opt === 14) {
+      await personajesFemeninos(urlPeople);
+    } else if (opt === 15) {
+      await traerLugaresPorPelicula(urlLocations, urlFilms);
+    } else if (opt === 16) {
+      await climaLugares(urlLocations);
+    } else if (opt === 17) {
+      await terrenoDeLugares(urlLocations);
+    } else if (opt === 18) {
+      await traerSpecies(urlSpecies);
+    } else if (opt === 19) {
+      await traerVehiculos(urlVehicles);
+    } else if (opt === 20) {
+      await descripcionVehiculos(urlVehicles);
     }
   }
 }
+
+menu();
