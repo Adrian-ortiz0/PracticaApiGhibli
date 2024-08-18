@@ -220,54 +220,198 @@ async function descripcionVehiculos(url) {
 
 async function menu() {
   while (true) {
-    const opt = Number(
-      prompt(
-        "Bienvenido a la wiki de Studio Ghibli! \n 1. Ver Nombre de peliculas \n 2. Ver Nombres en Japones \n 3. Ver directores \n 4. Ver productores \n 5. Ver año de lanzamiento \n 6. Peliculas mejor puntuadas \n 7. Peliculas peor puntuadas \n 8. Personajes de las peliculas \n 9. Ver peliculas con mayor duracion \n 10. Ver peliculas de menor duracion \n 11. Personajes menores de 18 \n 12. Personajes mayores de 18 \n 13. Personajes masculinos \n 14. Personajes femeninos \n 15. Mostrar lugares de las peliculas \n 16. Mostrar el clima de los lugares \n 17. Mostrar el terreno de los lugares \n 18. Mostrar Especies \n 19. Mostrar vehiculos \n 20. Mostrar descripcion de los vehiculos \n 0. Salir"
-      )
-    );
-    if (opt === 1) {
-      await traerFilmes(urlFilms);
-    } else if (opt === 0) {
-      alert("Adios...");
-      break;
-    } else if (opt === 2) {
-      await traerNombresEnJapones(urlFilms);
-    } else if (opt === 3) {
-      await traerDirectores(urlFilms);
-    } else if (opt === 4) {
-      await traerProductores(urlFilms);
-    } else if (opt === 5) {
-      await traerFechaDeLanzamiento(urlFilms);
-    } else if (opt === 6) {
-      await mejorPuntuadas(urlFilms);
-    } else if (opt === 7) {
-      await peorPuntuadas(urlFilms);
-    } else if (opt === 8) {
-      await traerPersonajesPorPelicula(urlPeople, urlFilms);
-    } else if (opt === 9) {
-      await peliculasMayoresA100(urlFilms);
-    } else if (opt === 10) {
-      await peliculasMenoresA100(urlFilms);
-    } else if (opt === 11) {
-      await personajesMenores(urlPeople);
-    } else if (opt === 12) {
-      await personajesMayores(urlPeople);
-    } else if (opt === 13) {
-      await personajesMasculinos(urlPeople);
-    } else if (opt === 14) {
-      await personajesFemeninos(urlPeople);
-    } else if (opt === 15) {
-      await traerLugaresPorPelicula(urlLocations, urlFilms);
-    } else if (opt === 16) {
-      await climaLugares(urlLocations);
-    } else if (opt === 17) {
-      await terrenoDeLugares(urlLocations);
-    } else if (opt === 18) {
-      await traerSpecies(urlSpecies);
-    } else if (opt === 19) {
-      await traerVehiculos(urlVehicles);
-    } else if (opt === 20) {
-      await descripcionVehiculos(urlVehicles);
+    try {
+      const opt = Number(
+        prompt(
+          "Bienvenido a la Wiki de Studio Ghibli! \n 1. Peliculas \n 2. Personajes \n 3. Lugares \n 4. Especies \n 5. Vehiculos \n 0. Salir"
+        )
+      );
+
+      if (isNaN(opt)) {
+        throw new Error("Por favor, ingresa un número válido.");
+      }
+
+      if (opt === 1) {
+        await menuPeliculas();
+      } else if (opt === 2) {
+        await menuPersonajes();
+      } else if (opt === 3) {
+        await menuLugares();
+      } else if (opt === 4) {
+        await menuEspecies();
+      } else if (opt === 5) {
+        await menuVehiculos();
+      } else if (opt === 0) {
+        alert("Adios...");
+        break;
+      } else {
+        alert("Opción no válida. Intenta de nuevo.");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
+
+async function menuPeliculas() {
+  while (true) {
+    try {
+      const opt = Number(
+        prompt(
+          "1. Ver todas las peliculas \n 2. Ver Nombres originales de las peliculas \n 3. Mostrar directores \n 4. Mostrar prodcutores \n 5. Mostrar fechas de lanzamiento \n 6. Mostrar peliculas mejor puntuadas \n 7. Mostrar peliculas peor puntuadas \n 8. Peliculas de mayor duracion \n 9. Peliculas de menor duracion \n 0. Salir"
+        )
+      );
+
+      if (isNaN(opt)) {
+        throw new Error("Por favor, ingresa un número válido.");
+      }
+
+      if (opt === 1) {
+        await traerFilmes(urlFilms);
+      } else if (opt === 0) {
+        alert("Adios...");
+        break;
+      } else if (opt === 2) {
+        await traerNombresEnJapones(urlFilms);
+      } else if (opt === 3) {
+        await traerDirectores(urlFilms);
+      } else if (opt === 4) {
+        await traerProductores(urlFilms);
+      } else if (opt === 5) {
+        await traerFechaDeLanzamiento(urlFilms);
+      } else if (opt === 6) {
+        await mejorPuntuadas(urlFilms);
+      } else if (opt === 7) {
+        await peorPuntuadas(urlFilms);
+      } else if (opt === 8) {
+        await peliculasMayoresA100(urlFilms);
+      } else if (opt === 9) {
+        await peliculasMenoresA100(urlFilms);
+      } else {
+        alert("Opción no válida. Intenta de nuevo.");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
+
+async function menuPersonajes() {
+  while (true) {
+    try {
+      const opt = Number(
+        prompt(
+          "1. Ver personajes de las peliculas \n 2. Ver personajes mayores de 18 \n 3. Ver personajes menores de 18 \n 4. Ver personajes femeninos \n 5. Ver personajes masculinos \n 0. Salir"
+        )
+      );
+
+      if (isNaN(opt)) {
+        throw new Error("Por favor, ingresa un número válido.");
+      }
+
+      if (opt === 1) {
+        await traerPersonajesPorPelicula(urlPeople, urlFilms);
+      } else if (opt === 0) {
+        alert("Adios...");
+        break;
+      } else if (opt === 2) {
+        await personajesMayores(urlPeople);
+      } else if (opt === 3) {
+        await personajesMenores(urlPeople);
+      } else if (opt === 4) {
+        await personajesFemeninos(urlPeople);
+      } else if (opt === 5) {
+        await personajesMasculinos(urlPeople);
+      } else {
+        alert("Opción no válida. Intenta de nuevo.");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
+
+async function menuLugares() {
+  while (true) {
+    try {
+      const opt = Number(
+        prompt(
+          "1. Mostrar lugares de las peliculas \n 2. Mostrar el clima de los lugares \n 3. Mostrar el terreno de los lugares \n 0. Salir"
+        )
+      );
+
+      if (isNaN(opt)) {
+        throw new Error("Por favor, ingresa un número válido.");
+      }
+
+      if (opt === 1) {
+        await traerLugaresPorPelicula(urlLocations, urlFilms);
+      } else if (opt === 0) {
+        alert("Adios...");
+        break;
+      } else if (opt === 2) {
+        await climaLugares(urlLocations);
+      } else if (opt === 3) {
+        await terrenoDeLugares(urlLocations);
+      } else {
+        alert("Opción no válida. Intenta de nuevo.");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
+
+async function menuEspecies() {
+  while (true) {
+    try {
+      const opt = Number(
+        prompt("1. Mostrar todas las especies de las peliculas \n 0. Salir")
+      );
+
+      if (isNaN(opt)) {
+        throw new Error("Por favor, ingresa un número válido.");
+      }
+
+      if (opt === 1) {
+        await traerSpecies(urlSpecies);
+      } else if (opt === 0) {
+        alert("Adios...");
+        break;
+      } else {
+        alert("Opción no válida. Intenta de nuevo.");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
+
+async function menuVehiculos() {
+  while (true) {
+    try {
+      const opt = Number(
+        prompt(
+          "1. Mostrar todos los vehiculos \n 2. Mostrar descripcion de los vehiculos \n 0. Salir"
+        )
+      );
+
+      if (isNaN(opt)) {
+        throw new Error("Por favor, ingresa un número válido.");
+      }
+
+      if (opt === 1) {
+        await traerVehiculos(urlVehicles);
+      } else if (opt === 2) {
+        await descripcionVehiculos(urlVehicles);
+      } else if (opt === 0) {
+        alert("Adios...");
+        break;
+      } else {
+        alert("Opción no válida. Intenta de nuevo.");
+      }
+    } catch (error) {
+      alert(error.message);
     }
   }
 }
